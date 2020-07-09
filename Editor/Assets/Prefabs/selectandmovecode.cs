@@ -7,15 +7,43 @@ public class selectandmovecode : MonoBehaviour
     private GameObject saklananObjem;
     public Color colorone;
 
+    /// <summary>
+    ///
+    /// </summary>
+    Renderer sideobjrend;
+
     void Update()
     {
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(ray.origin, ray.direction * 20);
+        Debug.DrawRay(ray.origin, ray.direction * 20,Color.cyan);
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (hit.transform.gameObject.CompareTag("Prefab"))
+            {
+                hit.collider.transform.position = new Vector3(ray.direction.x, ray.direction.y, -1);
+                sideobjrend.material.SetColor("_Color", Color.blue);
+                Debug.Log(hit.collider.name);
+
+            }
+
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            sideobjrend.material.SetColor("_Color", Color.white);
+
+        }
+
+        /*
         selectedPosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.transform.position, selectedPosition);
-        
 
 
-        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject() && hit.collider.CompareTag("Prefab")  )
+
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && hit.collider.CompareTag("Prefab")  )
         {
 
             try
@@ -42,30 +70,29 @@ public class selectandmovecode : MonoBehaviour
             hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
             hit.collider.gameObject.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, 0);
 
-        }
+        }*/
 
     }
     public void sizeUp()
     {
-        saklananObjem.transform.localScale = saklananObjem.transform.localScale * (1.5f);
-
+        sideobjrend.transform.localScale = sideobjrend.transform.localScale * (1.5f);
     }
     public void sizeDown()
     {
-        saklananObjem.transform.localScale = saklananObjem.transform.localScale * (.5f);
+        sideobjrend.transform.localScale = sideobjrend.transform.localScale * (.5f);
 
     }
     public void turnLeft()
     {
-        saklananObjem.transform.Rotate(new Vector3(0, 0, 30));
+        sideobjrend.transform.Rotate(new Vector3(0, 0, 30));
     }
     public void turnRight()
     {
-        saklananObjem.transform.Rotate(new Vector3(0, 0, -30));
+        sideobjrend.transform.Rotate(new Vector3(0, 0, -30));
 
     }
     public void lenghtUp()
     {
-        saklananObjem.transform.localScale = new Vector3(saklananObjem.transform.localScale.x+1, saklananObjem.transform.localScale.y, saklananObjem.transform.localScale.z);
+        sideobjrend.transform.localScale = new Vector3(sideobjrend.transform.localScale.x + 1, sideobjrend.transform.localScale.y, sideobjrend.transform.localScale.z);
     }
 }
