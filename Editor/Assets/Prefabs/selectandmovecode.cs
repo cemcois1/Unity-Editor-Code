@@ -19,11 +19,14 @@ public class selectandmovecode : MonoBehaviour
         RaycastHit2D hit;
         hit = Physics2D.Raycast(ray.origin, ray.direction * 20);
         Debug.DrawRay(ray.origin, ray.direction * 20,Color.cyan);
-        if (Input.GetMouseButtonDown(0))
+        
+        if (Input.GetMouseButton(0))
         {
             if (hit.transform.gameObject.CompareTag("Prefab"))
             {
-                hit.collider.transform.position = new Vector3(ray.direction.x, ray.direction.y, -1);
+                //hit.collider.transform.position = new Vector3(ray.origin.x-ray.direction.x,ray.origin.x-ray.direction.y, -.39f);
+
+                hit.collider.gameObject.transform.position = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
                 sideobjrend.material.SetColor("_Color", Color.blue);
                 Debug.Log(hit.collider.name);
 
