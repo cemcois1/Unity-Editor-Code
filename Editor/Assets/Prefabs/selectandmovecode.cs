@@ -1,8 +1,21 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
+using System.Collections;
+public class saveddata
+{
+    public Vector2 pozisyon;
 
+    public saveddata(Vector2 vec)
+    {
+        pozisyon.x = vec.x;
+        pozisyon.y = vec.y;
+
+
+    }
+
+}
 public class selectandmovecode : MonoBehaviour
 {
+    [SerializeField] GameObject nokta;
     Renderer sideobjrend;
     [SerializeField] GameObject Myscene;
     [SerializeField] GameObject[] prefabs;
@@ -10,6 +23,13 @@ public class selectandmovecode : MonoBehaviour
     public GameObject gameScene;
     public GameObject[] buttons;
     public GameObject text;
+    ArrayList arrayList = new ArrayList();
+    void Start()
+    {
+
+    }
+
+
 
     void Update()
     {
@@ -23,12 +43,29 @@ public class selectandmovecode : MonoBehaviour
         selectPoints(hit);
 
 
-        
-    }   
+
+    }
     private void selectPoints(RaycastHit2D hit)
     {
-        if (Input.GetMouseButtonDown(0)&&Karaktersahnesimi)
+        if (Input.GetMouseButtonDown(0) && Karaktersahnesimi)
         {
+            //noktalar adında bir  prefabım olsun  -------
+            // prefabım  rayin hit ettiği noktada oluştursun--------
+            Instantiate(nokta, new Vector3(hit.point.x, hit.point.y, -1), Quaternion.identity);
+            //noktaları 3 lü olacak şekilde bir diziye kaydetsin ve çizsin 
+            arrayList.Add(hit.point.x);
+            arrayList.Add(hit.point.y);
+            for (int i = 0; i < arrayList.Count; i++)
+            {
+                print(arrayList[i]);
+
+            }
+
+
+
+
+
+            //sonra da başka 3 lü noktalar seçilir bitti butonuna basılana kadar
 
 
         }
@@ -37,7 +74,7 @@ public class selectandmovecode : MonoBehaviour
     }
     private void moveControl(RaycastHit2D hit)
     {
-        if (Input.GetMouseButton(0)&&!Karaktersahnesimi)
+        if (Input.GetMouseButton(0) && !Karaktersahnesimi)
         {
             if (hit.transform.gameObject.CompareTag("Prefab"))
             {
@@ -48,7 +85,7 @@ public class selectandmovecode : MonoBehaviour
             }
 
         }
-        else if (Input.GetMouseButtonUp(0)&&!Karaktersahnesimi&& hit.transform.gameObject.CompareTag("Prefab"))
+        else if (Input.GetMouseButtonUp(0) && !Karaktersahnesimi && hit.transform.gameObject.CompareTag("Prefab"))
         {
             sideobjrend.material.SetColor("_Color", Color.white);
             sideobjrend.transform.position.Set(sideobjrend.transform.position.x, sideobjrend.transform.position.y, 0);
@@ -93,7 +130,7 @@ public class selectandmovecode : MonoBehaviour
         //ekrandaki  herşeyi kapat 
         gameScene.SetActive(false);
         //butonları da kapat
-        foreach(GameObject butonlar in buttons)
+        foreach (GameObject butonlar in buttons)
         {
             butonlar.SetActive(false);
         }

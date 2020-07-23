@@ -1777,6 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39d5f7dc5374f1468e7b74986c63b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nokta: {fileID: 2362191108541326272, guid: 6e46305e0ce67b348ab57875c8ea1e2e, type: 3}
   Myscene: {fileID: 2055630299}
   prefabs:
   - {fileID: 3029208313537337041, guid: a9adf8f3ea742f545a062b5326aaadc0, type: 3}
