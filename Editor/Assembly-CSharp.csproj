@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\NewBehaviourScript.cs" />
-    <Compile Include="Assets\Prefabs\craftcode.cs" />
     <Compile Include="Assets\Prefabs\moveObjectscode.cs" />
     <Compile Include="Assets\Prefabs\selectandmovecode.cs" />
     <Compile Include="Assets\movableobject.cs" />
