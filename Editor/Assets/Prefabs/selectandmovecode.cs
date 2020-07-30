@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+using UnityEditor.Advertisements;
 using System.Collections;
 
 public class selectandmovecode : MonoBehaviour
@@ -9,11 +9,13 @@ public class selectandmovecode : MonoBehaviour
     Renderer sideobjrend;
     [SerializeField] GameObject Myscene;
     [SerializeField] GameObject[] prefabs;
-    bool Karaktersahnesimi = false;
     public GameObject gameScene;
     public GameObject[] buttons;
     public GameObject text;
     public GameObject parent;
+    bool Karaktersahnesimi = false;
+    int i = 0;
+
 
     ArrayList arrayList = new ArrayList();
 
@@ -36,7 +38,7 @@ public class selectandmovecode : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && Karaktersahnesimi)
         {
             print(hit.collider.name);
-           // if (hit.collider.name)
+            // if (hit.collider.name)
             {
 
             }
@@ -117,7 +119,8 @@ public class selectandmovecode : MonoBehaviour
         print("girdi");
         bool basarilimi = false;
         //eğer kaydet butonuna basılırsa  karakter prefab olarak kaydet  noktaları
-        UnityEditor.PrefabUtility.SaveAsPrefabAsset(parent,assetPath: "Assets/Prefabs/Karakter", out basarilimi);
+        string localpath = @"Assets\\Prefabs\\Karakter\\" + i++ +".prefab";
+        UnityEditor.PrefabUtility.SaveAsPrefabAsset(parent, assetPath: localpath, out basarilimi);
         if (basarilimi == false)
         {
             print("basarisiz");
@@ -146,5 +149,16 @@ public class selectandmovecode : MonoBehaviour
         //kaydet buttonunu aç
         kaydetbutton.SetActive(true);
 
+    }
+    public void backToGamedesign()
+    {
+        Karaktersahnesimi = false;
+        gameScene.SetActive(true);
+        foreach (GameObject butonlar in buttons)
+        {
+            butonlar.SetActive(true);
+        }
+        text.SetActive(false);
+        kaydetbutton.SetActive(false);
     }
 }
