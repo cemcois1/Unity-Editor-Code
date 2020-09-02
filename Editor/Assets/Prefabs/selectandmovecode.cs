@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor.Advertisements;
 using System.Collections;
 
 public class selectandmovecode : MonoBehaviour
@@ -15,7 +14,7 @@ public class selectandmovecode : MonoBehaviour
     public GameObject parent;
     bool Karaktersahnesimi = false;
     int i = 0;
-
+    [SerializeField] Material[] renkpaleti;
 
     ArrayList arrayList = new ArrayList();
 
@@ -63,7 +62,7 @@ public class selectandmovecode : MonoBehaviour
         {
             if (hit.transform.gameObject.CompareTag("Prefab"))
             {
-                hit.collider.GetComponent<BoxCollider2D>().size = new Vector2(5, 5);
+                hit.collider.GetComponent<BoxCollider2D>().size = new Vector2(20, 20);
                 sideobjrend = hit.collider.GetComponent<Renderer>();
 
                 hit.collider.gameObject.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, -1);
@@ -82,7 +81,18 @@ public class selectandmovecode : MonoBehaviour
 
         }
     }
+    public void getcolor(string name)
+    {
+        for (int i = 0; i < renkpaleti.Length; i++)
+        {
+            if (name==renkpaleti[i].name)
+            {
+                sideobjrend.material = renkpaleti[i];
 
+            }
+        }
+
+    }
     public void sizeUp()
     {
         sideobjrend.transform.localScale = sideobjrend.transform.localScale * (1.5f);
@@ -119,8 +129,14 @@ public class selectandmovecode : MonoBehaviour
         print("girdi");
         bool basarilimi = false;
         //eğer kaydet butonuna basılırsa  karakter prefab olarak kaydet  noktaları
-        string localpath = @"Assets\\Prefabs\\Karakter\\" + i++ +".prefab";
+        string localpath = @"Assets\\Prefabs\\Karakter\\" + i++ + ".prefab";
         UnityEditor.PrefabUtility.SaveAsPrefabAsset(parent, assetPath: localpath, out basarilimi);
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+
+            Destroy(parent.transform.GetChild(i).gameObject);
+
+        }
         if (basarilimi == false)
         {
             print("basarisiz");
