@@ -3,6 +3,7 @@ using System.Collections;
 
 public class selectandmovecode : MonoBehaviour
 {
+    GameObject sonnokta;
     [SerializeField] GameObject nokta;
     [SerializeField] GameObject kaydetbutton;
     Renderer sideobjrend;
@@ -24,6 +25,10 @@ public class selectandmovecode : MonoBehaviour
         RaycastHit2D hit;
         hit = Physics2D.Raycast(ray.origin, ray.direction * 20);
         Debug.DrawRay(ray.origin, ray.direction * 20, Color.cyan);
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit(0);
+        }
 
         moveControl(hit);
         selectPoints(hit);
@@ -43,7 +48,9 @@ public class selectandmovecode : MonoBehaviour
             }
             //noktalar adında bir  prefabım olsun  -------
             // prefabım  rayin hit ettiği noktada oluştursun--------
-            Instantiate(nokta, new Vector3(hit.point.x, hit.point.y, -1), Quaternion.identity, parent.transform);
+            sonnokta = Instantiate(nokta, new Vector3(hit.point.x, hit.point.y, -1), Quaternion.identity, parent.transform);
+            sideobjrend = sonnokta.GetComponent<Renderer>();
+
             //noktaları 3 lü olacak şekilde bir diziye kaydetsin ve çizsin 
             arrayList.Add(hit.point.x);
             arrayList.Add(hit.point.y);
@@ -62,7 +69,7 @@ public class selectandmovecode : MonoBehaviour
         {
             if (hit.transform.gameObject.CompareTag("Prefab"))
             {
-                hit.collider.GetComponent<BoxCollider2D>().size = new Vector2(20, 20);
+                hit.collider.GetComponent<BoxCollider2D>().size = new Vector2(40, 40);
                 sideobjrend = hit.collider.GetComponent<Renderer>();
 
                 hit.collider.gameObject.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, -1);
@@ -85,7 +92,7 @@ public class selectandmovecode : MonoBehaviour
     {
         for (int i = 0; i < renkpaleti.Length; i++)
         {
-            if (name==renkpaleti[i].name)
+            if (name == renkpaleti[i].name)
             {
                 sideobjrend.material = renkpaleti[i];
 
@@ -126,7 +133,7 @@ public class selectandmovecode : MonoBehaviour
     }
     public void kaydet()
     {
-        print("girdi");
+
         bool basarilimi = false;
         //eğer kaydet butonuna basılırsa  karakter prefab olarak kaydet  noktaları
         string localpath = @"Assets\\Prefabs\\Karakter\\" + i++ + ".prefab";
@@ -139,12 +146,12 @@ public class selectandmovecode : MonoBehaviour
         }
         if (basarilimi == false)
         {
-            print("basarisiz");
+            // print("basarisiz");
 
         }
         if (basarilimi == true)
         {
-            print("basarili");
+            // print("basarili");
 
         }
 
@@ -176,5 +183,9 @@ public class selectandmovecode : MonoBehaviour
         }
         text.SetActive(false);
         kaydetbutton.SetActive(false);
+    }
+    public void yoket()
+    {
+        Destroy(sideobjrend);
     }
 }
